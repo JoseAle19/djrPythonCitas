@@ -136,7 +136,7 @@ def list_appointment(request, finish):
         'Message': 'No hay citas, por ahora',
         'Counts': len(appointment.data),
         'appointmentsFinish': appointment.data
-    }, status= status.HTTP_204_NO_CONTENT)
+    })
         
         
 

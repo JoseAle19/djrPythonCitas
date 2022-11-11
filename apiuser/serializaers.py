@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LoginUserSerializer(serializers.ModelSerializer):
+       
     class Meta:
         model=UsersModel
         fields=['email','password','rol']
@@ -21,7 +22,11 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
 
 class AppointmentSerializer(serializers.ModelSerializer):
+   
     class Meta:
         model = PatientAppointmentModel
         fields = '__all__'
-      
+class FinishAppointmentSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = PatientAppointmentModel
+        fields=['statustAppointment']

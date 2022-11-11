@@ -7,7 +7,7 @@ class UsersModel(models.Model):
     lastname = models.CharField(max_length=100)
     rol= models.CharField(max_length=100)
     phone= models.CharField(max_length=10, unique= True,)
-    email = models.CharField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=True, )
     password = models.CharField(max_length=100)
 
 

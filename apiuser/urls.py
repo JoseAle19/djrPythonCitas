@@ -8,7 +8,7 @@ urlpatterns =[
     path('register/', user_register, name='register'),
     path('create_appointment/',create_appointment , name='create_appointment'),
     path('list_appointment/<int:finish>/',list_appointment, name='list_appointment'),
-    path('finsh_appointment/<int:id>/', finishAppointment, name='finsh_appointment'),
+    path('finish_appointment/<int:id>/', finishAppointment, name='finsh_appointment'),
     path('listUsers/', listUsers, name='listUsers'),
     
 ]

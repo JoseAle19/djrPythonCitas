@@ -6,11 +6,11 @@ from .serializaers import LoginUserSerializer, RegisterUserSerializer, Appointme
 from .validates import validateHour
 import re
 
-# funcion que validad si es correo o no, con expresiones regulares 
+
+
 def isValidEmail(correo):
     expresion_regular = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"
     return re.match(expresion_regular, correo) is not None
-
 
 @api_view(['POST'])
 def user_login(request):
@@ -18,9 +18,8 @@ def user_login(request):
         infoUser = request.data
         
         # Validar si el cliente no manda correo
-
         if infoUser['email'] == '':
-          return Response({
+             return Response({
               'Status': False,
               'Message':'Correo vacio'
           })
@@ -88,7 +87,7 @@ def user_register(request):
                return Response({
                 'Status': False,
                 'Message':'Erro al registrarse',
-                'Error': user_serializer.errors
+                'Data': user_serializer.errors
             }, status= status.HTTP_400_BAD_REQUEST)
 
     
@@ -106,14 +105,14 @@ def create_appointment(request):
        return Response({
                 'Status': False,
                 'Message':'No hay disponibilidad en este dia',
-            }, status= status.HTTP_405_METHOD_NOT_ALLOWED)
+            })
     
     if appointment.is_valid():    
         return validateHour(appointmentsSerializer.data, request.data, appointment)
-    else:
-        return Response({
+    
+    return Response({
             "Status": False,
-            "Erros": appointment.errors
+            "Errors": appointment.errors
         })
         
         
@@ -144,7 +143,7 @@ def list_appointment(request, finish):
 
 
 
-@api_view(['POST'])     
+@api_view(['PUT'])     
 def finishAppointment(request, id):
     appointment = PatientAppointmentModel.objects.filter(id = id).first()
     dataAppo =  FinishAppointmentSerializer(appointment, data= request.data)
@@ -157,7 +156,7 @@ def finishAppointment(request, id):
     if dataAppo.is_valid():
        dataAppo.save()
        return Response({
-                  'Status':False,
+                  'Status':True,
                   'Message': 'Cita finalizada',
                   'data': dataAppo.data
                       })

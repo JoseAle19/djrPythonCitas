@@ -24,6 +24,48 @@ def listAppointments(request, id):
     
     
     
-# @api_view(['POST'])
-# def 
+@api_view(['POST'])
+def appointmentUser(request, flag):
+    userEmail = request.data
 
+
+
+    appointUser = AppointmentSerializer(
+      PatientAppointmentModel.objects.filter(emailPatient = userEmail['email'], statustAppointment = True) , many=True)
+
+    if flag == 0:
+      appointUser = AppointmentSerializer(
+      PatientAppointmentModel.objects.filter(emailPatient = userEmail['email'], statustAppointment = False) , many=True)
+      return Response({
+        'Status': True,
+        'Message': 'Citas terminadas',
+        'Counts': len(appointUser.data),
+        'Appointment': appointUser.data
+
+      })
+      
+    return Response({
+      'Status': True,
+      'Message': 'Citas Pendientes',
+      'Counts': len(appointUser.data),
+      'Appointment': appointUser.data
+    })
+
+
+
+@api_view(['DELETE'])
+def deleteAppointment(request, id):
+  appointmetDelete = AppointmentSerializer(
+    PatientAppointmentModel.objects.filter(id = id).first(),)
+  
+  if appointmetDelete.data['namePatient'] == '':
+      return Response({
+        'Status': False,
+        'Message':'No hay ninguna cita con el id '+ str(id)
+      })
+  PatientAppointmentModel.objects.filter(id = id).first().delete()
+  return Response({
+    'Status': True,
+    'Message':'Cita eliminada con el id '+ str(id),
+  })
+  

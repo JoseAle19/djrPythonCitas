@@ -26,6 +26,8 @@ class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PatientAppointmentModel
         fields = '__all__'
+        
+        
 class FinishAppointmentSerializer(serializers.ModelSerializer):
     class Meta():
         model = PatientAppointmentModel

@@ -77,7 +77,7 @@ def user_register(request):
                  'Status': False,
                 'Message':'Correo no valido',
                 })
-            # user_serializer.save()
+            user_serializer.save()
             return Response({
                 'Status': True,
                 'Message':'Registro exitoso',

@@ -1,6 +1,6 @@
 from rest_framework.urls import path
 from .views import welcome
-from .api import user_login, user_register, create_appointment, list_appointment, finishAppointment, listUsers
+from .api import user_login, user_register, create_appointment, list_appointment, finishAppointment, listUsers, getUserByEmail
 
 urlpatterns =[
     path('', welcome, name='welcome'),
@@ -10,5 +10,6 @@ urlpatterns =[
     path('list_appointment/<int:finish>/',list_appointment, name='list_appointment'),
     path('finish_appointment/<int:id>/', finishAppointment, name='finsh_appointment'),
     path('listUsers/', listUsers, name='listUsers'),
+    path('getUserByEmail/', getUserByEmail, name='getUserByEmail'),
     
 ]

@@ -1,3 +1,4 @@
+import random
 from .models import UsersModel, PatientAppointmentModel
 from rest_framework import status
 from rest_framework.response import Response
@@ -69,6 +70,8 @@ def user_login(request):
 def user_register(request):    
     if request.method == 'POST':
         user = request.data
+        rNumber = random.randint(1, 50)
+        user['image'] = 'https://joeschmoe.io/api/v1/male/'+str(rNumber)
         user_serializer  = RegisterUserSerializer(data = user)
         if user_serializer.is_valid():
             # Validar corrreo 
@@ -185,3 +188,19 @@ def listUsers(request):
         'Counts': len(usersSerializer.data),
         'Users': usersSerializer.data,
     })
+
+
+
+@api_view(["POST"])
+def getUserByEmail(request):
+    userById = UserSerializer(UsersModel.objects.all().filter(
+        email = request.data['email']
+    ), many = True)
+    print(len(userById.data))
+    return Response({
+        'Status': True,
+        'Message':  'Usuario obtenido' if  len(userById.data) >0 else 'Sin datos del usuario',
+        'Counts': len(userById.data),
+        'Data': userById.data
+    })
+    pass

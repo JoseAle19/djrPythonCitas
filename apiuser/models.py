@@ -8,7 +8,7 @@ class UsersModel(models.Model):
     phone= models.CharField(max_length=10, unique= True,)
     email = models.CharField(max_length=100, unique=True, )
     password = models.CharField(max_length=100)
-
+    image = models.TextField(max_length=100, default='https://joeschmoe.io/api/v1/male/random')
 
 
 

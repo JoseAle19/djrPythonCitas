@@ -19,7 +19,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 DEBUG = 'RENDER' not in os.environ
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '192.168.206.7',
+    "127.0.0.1",
+    "192.168.115.254"]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -52,7 +55,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+# If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOWED_ORIGINS = [
 #     'http://localhost:3030',
@@ -88,7 +92,7 @@ WSGI_APPLICATION = 'restapi.wsgi.application'
 DATABASES = {
     'default':  dj_database_url.config(
         default='sqlite:///db.sqlite3',
-        conn_max_age=600  
+        conn_max_age=600
     )
 }
 
@@ -130,13 +134,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
- 
+
 if not DEBUG:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
- 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
